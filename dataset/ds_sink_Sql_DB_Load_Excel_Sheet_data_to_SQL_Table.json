@@ -1,0 +1,20 @@
+{
+	"name": "ds_sink_Sql_DB_Load_Excel_Sheet_data_to_SQL_Table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Load_Excel_Sheet_data_to_SQL_Table"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "",
+			"table": "EmployeeTbl"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

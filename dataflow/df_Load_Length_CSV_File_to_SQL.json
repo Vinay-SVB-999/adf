@@ -1,0 +1,86 @@
+{
+	"name": "df_Load_Length_CSV_File_to_SQL",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_src_fixed_lenth_ADLS_to_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "SourceFixedLength"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_fixed_length_ADLS_to_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "sinkloadtoSQLTable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "splitColumns"
+				},
+				{
+					"name": "selectsplietedcolumns"
+				},
+				{
+					"name": "castchangedatatypes"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {empname        dept                    dob                   salary            } as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceFixedLength",
+				"SourceFixedLength derive({EmpName   } = substring({empname        dept                    dob                   salary            }, 1, 15),",
+				"          {Dept         } = substring({empname        dept                    dob                   salary            }, 16, 24),",
+				"          DOB = substring({empname        dept                    dob                   salary            }, 40, 22),",
+				"          Salary = substring({empname        dept                    dob                   salary            }, 62, 18)) ~> splitColumns",
+				"splitColumns select(mapColumn(",
+				"          {EmpName   },",
+				"          {Dept         },",
+				"          DOB,",
+				"          Salary",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectsplietedcolumns",
+				"selectsplietedcolumns cast(output(",
+				"          {EmpName   } as string,",
+				"          {Dept         } as string,",
+				"          DOB as date,",
+				"          Salary as integer",
+				"     ),",
+				"     errors: true) ~> castchangedatatypes",
+				"castchangedatatypes sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          empname as string,",
+				"          dept as string,",
+				"          dob as date,",
+				"          salary as decimal(12,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          empname = {EmpName   },",
+				"          dept = {Dept         },",
+				"          dob = DOB,",
+				"          salary = Salary",
+				"     )) ~> sinkloadtoSQLTable"
+			]
+		}
+	}
+}

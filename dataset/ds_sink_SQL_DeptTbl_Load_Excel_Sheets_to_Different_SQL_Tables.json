@@ -1,0 +1,29 @@
+{
+	"name": "ds_sink_SQL_DeptTbl_Load_Excel_Sheets_to_Different_SQL_Tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Load_Excel_Sheets_to_Different_SQL_Tables"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DeptId",
+				"type": "varchar"
+			},
+			{
+				"name": "DeptName",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "DeptTbl"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

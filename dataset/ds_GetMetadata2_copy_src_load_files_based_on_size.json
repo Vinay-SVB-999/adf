@@ -1,0 +1,72 @@
+{
+	"name": "ds_GetMetadata2_copy_src_load_files_based_on_size",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blobsa_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Filename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "load_files_based_on_size"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().Filename",
+					"type": "Expression"
+				},
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "SO43701",
+				"type": "String"
+			},
+			{
+				"name": "11",
+				"type": "String"
+			},
+			{
+				"name": "2019-07-01",
+				"type": "String"
+			},
+			{
+				"name": "Christy Zhu",
+				"type": "String"
+			},
+			{
+				"name": "christy12@adventure-works.com",
+				"type": "String"
+			},
+			{
+				"name": "Mountain-100 Silver, 44",
+				"type": "String"
+			},
+			{
+				"name": "16",
+				"type": "String"
+			},
+			{
+				"name": "3399.99",
+				"type": "String"
+			},
+			{
+				"name": "271.9992",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

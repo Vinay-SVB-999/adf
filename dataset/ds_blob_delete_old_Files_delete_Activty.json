@@ -1,0 +1,31 @@
+{
+	"name": "ds_blob_delete_old_Files_delete_Activty",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "blobsa_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"delFile": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "delete_old_Files"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().delFile",
+					"type": "Expression"
+				},
+				"folderPath": "tables",
+				"container": "target"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

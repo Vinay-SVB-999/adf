@@ -1,0 +1,71 @@
+{
+	"name": "df_JSON_to_CSV",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_src_load_json_to_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sourceJsonadls"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_load_json_to_csv",
+						"type": "DatasetReference"
+					},
+					"name": "sinkcsvfiletoadls"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flattensplitArraycolumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {SO Id} as string,",
+				"          SODate as string,",
+				"          Country as string,",
+				"          Sales as (Item as string, Qty as string, Value as string)[]",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'arrayOfDocuments') ~> sourceJsonadls",
+				"sourceJsonadls foldDown(unroll(Sales, Sales),",
+				"     mapColumn(",
+				"          {SO Id},",
+				"          SODate,",
+				"          Country,",
+				"          Item = Sales.Item,",
+				"          Qty = Sales.Qty,",
+				"          Value = Sales.Value",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flattensplitArraycolumns",
+				"flattensplitArraycolumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {SO Id} as string,",
+				"          SODate as string,",
+				"          Country as string,",
+				"          Item as string,",
+				"          Qty as string,",
+				"          Value as string",
+				"     ),",
+				"     partitionFileNames:['sales_json.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkcsvfiletoadls"
+			]
+		}
+	}
+}

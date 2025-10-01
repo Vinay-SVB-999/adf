@@ -1,0 +1,34 @@
+{
+	"name": "ds_SqlServer_Src_tables_bulk_load_from_sql_to_blob",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SQLServerOnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"table": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "bulk_load_tables_from_SQL_to_blob"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

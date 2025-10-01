@@ -1,0 +1,63 @@
+{
+	"name": "df_load_csv_to_json",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_src_adls_csv_to_json",
+						"type": "DatasetReference"
+					},
+					"name": "srccsvtojson"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_adls_csv_to_json",
+						"type": "DatasetReference"
+					},
+					"name": "sinkcsvtojson"
+				}
+			],
+			"transformations": [
+				{
+					"name": "CreateNewcolumnforsubcolumns"
+				},
+				{
+					"name": "Groupbyandaggregateforsubcolumns"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {SO Id} as string,",
+				"          SODate as string,",
+				"          Country as string,",
+				"          Item as string,",
+				"          Qty as string,",
+				"          Value as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> srccsvtojson",
+				"srccsvtojson derive(Sales = @(Item_id=Item,",
+				"          QTY_Value=Qty,",
+				"          Value_num=Value)) ~> CreateNewcolumnforsubcolumns",
+				"CreateNewcolumnforsubcolumns aggregate(groupBy({SO Id},",
+				"          SODate,",
+				"          Country),",
+				"     Sales = collect(Sales)) ~> Groupbyandaggregateforsubcolumns",
+				"Groupbyandaggregateforsubcolumns sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['sales_csv.json'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinkcsvtojson"
+			]
+		}
+	}
+}

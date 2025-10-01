@@ -1,0 +1,61 @@
+{
+	"name": "df_mutliple_Rows_to_single_row",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_src_mutliple_Rows_to_single_row",
+						"type": "DatasetReference"
+					},
+					"name": "srcmutlipleRows"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_sink_mutliple_Rows_to_single_row",
+						"type": "DatasetReference"
+					},
+					"name": "sinksinglerowvalue"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregateGroupBy"
+				},
+				{
+					"name": "derivedColumnaddcolumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ItemId as string,",
+				"          VartId as string,",
+				"          ItemName as string,",
+				"          VartName as string,",
+				"          WhNo as string,",
+				"          Zone as string,",
+				"          Bin as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> srcmutlipleRows",
+				"srcmutlipleRows aggregate(groupBy(ItemId,",
+				"          ItemName),",
+				"     VartName = collect(VartName)) ~> aggregateGroupBy",
+				"aggregateGroupBy derive(VartName = replace(replace(replace(toString(VartName),'\"',''),'[',''),']','')) ~> derivedColumnaddcolumn",
+				"derivedColumnaddcolumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['itemsdetailsinfo.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sinksinglerowvalue"
+			]
+		}
+	}
+}
