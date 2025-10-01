@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfsep2025restore"
+		},
+		"AzureDataLakeStorageGen2_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase_password": {
+			"value": ""
+		},
+		"FS_OnPrem_LS_password": {
+			"value": ""
+		},
+		"SQLServerOnPrem_password": {
+			"value": ""
+		},
+		"blobsa_ls_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorageGen2_properties_typeProperties_url": {
+			"value": "https://adlssep2025.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "sqlserversep2025.database.windows.net"
+		},
+		"AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "TestDB"
+		},
+		"AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "SQL_Admin"
+		},
+		"FS_OnPrem_LS_properties_typeProperties_host": {
+			"value": "C:\\ADF"
+		},
+		"FS_OnPrem_LS_properties_typeProperties_userId": {
+			"value": "vinay08341748626@gmail.com"
+		},
+		"SQLServerOnPrem_properties_typeProperties_server": {
+			"value": "Vinay_PC\\SQLEXPRESS"
+		},
+		"SQLServerOnPrem_properties_typeProperties_database": {
+			"value": "LibraryDB"
+		},
+		"SQLServerOnPrem_properties_typeProperties_userName": {
+			"value": "SQL_Admin"
+		}
+	}
+}
