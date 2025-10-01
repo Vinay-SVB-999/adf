@@ -1,0 +1,9 @@
+{
+	"name": "adfsep2025restore",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "bfd1ccf8-1aa6-481f-84a3-29ef0740a3e1",
+		"tenantId": "70eef7f2-78ff-46f5-8690-8c3ed6cd1869"
+	}
+}
