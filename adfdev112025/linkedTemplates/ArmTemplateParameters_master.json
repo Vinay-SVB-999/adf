@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "adfdev112025"
 		},
+		"ADBPrac1_accessToken": {
+			"value": ""
+		},
 		"AzureDataLakeStorageGen2_accountKey": {
 			"value": ""
 		},
@@ -19,6 +22,9 @@
 		},
 		"blobsa_ls_connectionString": {
 			"value": ""
+		},
+		"ADBPrac1_properties_typeProperties_existingClusterId": {
+			"value": "1113-031725-3mmdgyoy"
 		},
 		"AzureDataLakeStorageGen2_properties_typeProperties_url": {
 			"value": "https://adlssep2025.dfs.core.windows.net/"

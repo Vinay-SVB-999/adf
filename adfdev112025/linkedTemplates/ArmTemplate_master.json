@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adfdev112025"
 		},
+		"ADBPrac1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ADBPrac1'"
+		},
 		"AzureDataLakeStorageGen2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageGen2'"
@@ -26,6 +30,10 @@
 		"blobsa_ls_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'blobsa_ls'"
+		},
+		"ADBPrac1_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1113-031725-3mmdgyoy"
 		},
 		"AzureDataLakeStorageGen2_properties_typeProperties_url": {
 			"type": "string",
@@ -90,6 +98,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ADBPrac1_accessToken": {
+						"value": "[parameters('ADBPrac1_accessToken')]"
+					},
 					"AzureDataLakeStorageGen2_accountKey": {
 						"value": "[parameters('AzureDataLakeStorageGen2_accountKey')]"
 					},
@@ -98,6 +109,9 @@
 					},
 					"blobsa_ls_connectionString": {
 						"value": "[parameters('blobsa_ls_connectionString')]"
+					},
+					"ADBPrac1_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ADBPrac1_properties_typeProperties_existingClusterId')]"
 					},
 					"AzureDataLakeStorageGen2_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageGen2_properties_typeProperties_url')]"
